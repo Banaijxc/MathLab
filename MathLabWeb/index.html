@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="格物 MathLab — 函数绘图、积分计算与积分应用工作台。支持常见函数图鉴、可点击数学输入法、定积分与不定积分、旋转体体积和极坐标面积。">
+  <title>格物 MathLab · 函数、积分与几何工作台</title>
+  <meta name="theme-color" content="#f3f6f2">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%2313231c'/%3E%3Cpath d='M43 17c-7-4-11 2-13 11l-5 23c-2 8-5 11-11 8M22 29h20' fill='none' stroke='%23ffffff' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/vendor/katex.min.css">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <svg class="svg-sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-function" viewBox="0 0 24 24"><path d="M4 19c3.5 0 3.8-6.5 5-11.5C9.8 3.7 11 3 12.5 3c1.2 0 2 .6 2.5 1.4"/><path d="M6.5 10h6"/><path d="M14 14.5c.8 2.5 2 4.5 3.5 4.5 1.2 0 1.8-.8 2.5-2.5"/></symbol>
+    <symbol id="i-integral" viewBox="0 0 24 24"><path d="M15.5 3.5c-2.8-1.7-4.2.7-4.8 4.1L8.4 18.2c-.5 2.9-2.1 4.1-4.4 2.9"/><path d="M7.5 8.5h8"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.66 6.34l1.41-1.41"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5 8.5 8.5 0 1 0 20.5 14.2Z"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/><path d="M8 7h8M8 11h6"/></symbol>
+    <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.6 9a2.5 2.5 0 0 1 4.8 1c0 1.7-2.4 2-2.4 3.5"/><path d="M12 17.2h.01"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-trash" viewBox="0 0 24 24"><path d="M4 7h16M10 11v5M14 11v5"/><path d="M6 7l1 13h10l1-13"/><path d="M9 7V4h6v3"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+    <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M4 4l16 16"/><path d="M9.9 5.8A10.8 10.8 0 0 1 12 5.5c6 0 9.5 6.5 9.5 6.5a17 17 0 0 1-3 3.7M6.1 7.6A17 17 0 0 0 2.5 12S6 18.5 12 18.5c1 0 2-.2 2.8-.5"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 19h16"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M3.5 12a8.5 8.5 0 1 0 2.6-6.1"/><path d="M3 4v5h5"/></symbol>
+    <symbol id="i-zoom-in" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21M10.5 7.5v6M7.5 10.5h6"/></symbol>
+    <symbol id="i-zoom-out" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 21 21M7.5 10.5h6"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Z"/><path d="M19 16.5 19.7 18.3 21.5 19l-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7.7-1.8Z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 19V5M4 19h16"/><path d="m7 15 4-5 3 3 5-7"/></symbol>
+    <symbol id="i-shapes" viewBox="0 0 24 24"><path d="m4 9 5-3 5 3-5 3-5-3Z"/><path d="M6 12v5l5 3 5-3v-5"/><path d="M11 14v6"/><path d="M18.5 4.5a2.5 2.5 0 1 1-3.5 3.5"/></symbol>
+    <symbol id="i-keyboard" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2.5"/><path d="M6 10h.01M9.5 10h.01M13 10h.01M16.5 10h.01M6 13h.01M18 13h.01M8.5 16h7"/></symbol>
+    <symbol id="i-gallery" viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="8" rx="1.5"/><rect x="3" y="13" width="8" height="8" rx="1.5"/><rect x="13" y="13" width="8" height="8" rx="1.5"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></symbol>
+    <symbol id="i-rotate" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.4-5.7"/><path d="M20 4v5h-5"/><ellipse cx="12" cy="12" rx="4.5" ry="8" opacity=".55"/></symbol>
+    <symbol id="i-backspace" viewBox="0 0 24 24"><path d="M21 6H9l-6 6 6 6h12V6Z"/><path d="m12 9 5 6M17 9l-5 6"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5h.01"/></symbol>
+    <symbol id="i-command" viewBox="0 0 24 24"><path d="M9 6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6Z"/></symbol>
+  </svg>
+
+  <header class="topbar">
+    <a class="brand" href="#" id="brandLink" aria-label="格物 MathLab 首页">
+      <span class="brand-mark"><svg class="icon" aria-hidden="true"><use href="#i-integral"/></svg></span>
+      <span class="brand-copy">
+        <strong>格物 <em>MathLab</em></strong>
+        <small>函数 · 积分 · 几何</small>
+      </span>
+    </a>
+
+    <nav class="module-nav" aria-label="模块导航">
+      <button class="nav-item is-active" type="button" data-view="plot">
+        <svg class="icon"><use href="#i-function"/></svg>
+        <span class="nav-label"><span class="nav-label-full">函数绘图</span><span class="nav-label-short">函数</span></span>
+        <small>01</small>
+      </button>
+      <button class="nav-item" type="button" data-view="integral">
+        <svg class="icon"><use href="#i-integral"/></svg>
+        <span class="nav-label"><span class="nav-label-full">积分计算</span><span class="nav-label-short">积分</span></span>
+        <small>02</small>
+      </button>
+      <button class="nav-item" type="button" data-view="apps">
+        <svg class="icon"><use href="#i-shapes"/></svg>
+        <span class="nav-label"><span class="nav-label-full">积分应用</span><span class="nav-label-short">应用</span></span>
+        <small>03</small>
+      </button>
+    </nav>
+
+    <div class="top-actions">
+      <span class="offline-pill"><i></i>本地计算</span>
+      <button class="icon-btn text-btn" id="formulaBtn" type="button" title="公式手册">
+        <svg class="icon"><use href="#i-book"/></svg><span>公式手册</span>
+      </button>
+      <button class="icon-btn" id="themeBtn" type="button" title="切换明暗主题" aria-label="切换明暗主题">
+        <svg class="icon theme-icon-sun"><use href="#i-sun"/></svg>
+        <svg class="icon theme-icon-moon"><use href="#i-moon"/></svg>
+      </button>
+      <button class="icon-btn" id="helpBtn" type="button" title="使用说明" aria-label="使用说明">
+        <svg class="icon"><use href="#i-help"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <!-- ======================= 函数绘图 ======================= -->
+    <section class="view is-active" id="view-plot" data-view-panel="plot">
+      <div class="view-intro">
+        <div class="intro-copy">
+          <p class="eyebrow"><span>01</span> FUNCTION STUDIO</p>
+          <h1>把函数，画成<span class="accent-serif">直觉</span>。</h1>
+          <p class="intro-desc">输入表达式，立即获得可缩放、可追踪的函数图像。叠加多条曲线，观察零点、极值与变化趋势。</p>
+        </div>
+        <div class="intro-aside">
+          <div class="intro-stat"><strong>∞</strong><span>多函数叠加</span></div>
+          <div class="intro-stat"><strong>dx</strong><span>实时导数曲线</span></div>
+          <div class="intro-stat"><strong>1:1</strong><span>高清画布导出</span></div>
+        </div>
+      </div>
+
+      <div class="workspace-grid plot-workspace">
+        <aside class="panel-stack plot-controls">
+          <section class="card composer-card">
+            <div class="card-head">
+              <div>
+                <p class="card-kicker">EXPRESSIONS</p>
+                <h2>函数表达式</h2>
+              </div>
+              <span class="count-badge" id="functionCount">1 / 5</span>
+            </div>
+
+            <div class="function-list" id="functionList"></div>
+
+            <button class="add-function" id="addFunctionBtn" type="button">
+              <svg class="icon"><use href="#i-plus"/></svg>
+              <span>添加一条函数</span>
+              <kbd>+</kbd>
+            </button>
+
+            <div class="formula-hint">
+              <span>支持</span>
+              <code>2x</code><code>sin(x)</code><code>e^(-x^2)</code><code>abs(x)</code><code>exp(x) = e^x</code>
+            </div>
+
+            <div class="fn-input-method" id="fnInputMethod">
+              <div class="fn-input-head">
+                <div class="fn-input-title">
+                  <span class="fn-keyboard-mark"><svg class="icon"><use href="#i-keyboard"/></svg></span>
+                  <span>
+                    <strong>函数输入法</strong>
+                    <small>正在编辑 <b id="fnActiveLabel">f₁(x)</b></small>
+                  </span>
+                </div>
+                <button type="button" class="fn-input-toggle" id="fnInputToggle" aria-expanded="true" aria-controls="fnInputBody">
+                  <span>收起</span>
+                  <svg class="icon"><use href="#i-chevron"/></svg>
+                </button>
+              </div>
+              <div class="fn-input-body" id="fnInputBody">
+                <div class="fn-live-preview">
+                  <span class="fn-preview-label">识别为</span>
+                  <div class="fn-preview-math" id="fnPreviewMath" aria-live="polite"></div>
+                </div>
+                <div class="fn-keypad-tabs" role="tablist" aria-label="函数输入法分类">
+                  <button type="button" class="is-active" data-fn-keypad="symbols" role="tab">常用符号</button>
+                  <button type="button" data-fn-keypad="templates" role="tab">函数模板</button>
+                </div>
+                <div class="fn-keypad-panel is-active" data-fn-panel="symbols">
+                  <div class="fn-keypad-grid">
+                    <button type="button" data-fn-insert="x">x</button>
+                    <button type="button" data-fn-insert="x^2">x²</button>
+                    <button type="button" data-fn-insert="x^3">x³</button>
+                    <button type="button" data-fn-insert="^">^</button>
+                    <button type="button" data-fn-insert="(">(</button>
+                    <button type="button" data-fn-insert=")">)</button>
+                    <button type="button" data-fn-insert="+">+</button>
+                    <button type="button" data-fn-insert="-">−</button>
+                    <button type="button" data-fn-insert="*">×</button>
+                    <button type="button" data-fn-insert="/">÷</button>
+                    <button type="button" class="fn-key-pi" data-fn-insert="pi">π</button>
+                    <button type="button" class="fn-key-e" data-fn-insert="e">e</button>
+                    <button type="button" class="fn-key-fn" data-fn-insert="sqrt(">√</button>
+                    <button type="button" class="fn-key-fn" data-fn-insert="abs(">|x|</button>
+                    <button type="button" class="fn-key-fn" data-fn-insert="ln(">ln</button>
+                    <button type="button" class="fn-key-fn" data-fn-insert="e^(">eˣ</button>
+                    <button type="button" class="fn-key-fn" data-fn-insert="sin(">sin</button>
+                    <button type="button" class="fn-key-fn" data-fn-insert="cos(">cos</button>
+                  </div>
+                  <p class="fn-keypad-note"><code>exp(x)</code> 与 <code>e^x</code> 含义相同；点击符号会插入到当前正在编辑的函数。</p>
+                </div>
+                <div class="fn-keypad-panel" data-fn-panel="templates">
+                  <div class="fn-template-grid">
+                    <button type="button" data-fn-template="x"><strong>一次函数</strong><code>y = x</code></button>
+                    <button type="button" data-fn-template="x^2"><strong>二次函数</strong><code>y = x²</code></button>
+                    <button type="button" data-fn-template="x^3"><strong>三次函数</strong><code>y = x³</code></button>
+                    <button type="button" data-fn-template="sin(x)"><strong>正弦函数</strong><code>sin(x)</code></button>
+                    <button type="button" data-fn-template="e^x"><strong>指数函数</strong><code>e^x</code></button>
+                    <button type="button" data-fn-template="ln(x)"><strong>对数函数</strong><code>ln(x)</code></button>
+                    <button type="button" data-fn-template="e^(-x^2)"><strong>高斯函数</strong><code>e^(-x²)</code></button>
+                    <button type="button" data-fn-template="sin(x)*e^(-x^2/8)"><strong>阻尼振荡</strong><code>sin(x)e^(-x²/8)</code></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="card settings-card">
+            <div class="card-head compact">
+              <div>
+                <p class="card-kicker">VIEWPORT</p>
+                <h2>视图与坐标</h2>
+              </div>
+              <button class="ghost-link" id="autoFitBtn" type="button">
+                <svg class="icon"><use href="#i-spark"/></svg>自动适配
+              </button>
+            </div>
+
+            <div class="range-block">
+              <div class="range-label"><span>X 轴范围</span><small>定义域窗口</small></div>
+              <div class="field-pair">
+                <label class="mini-field"><span>min</span><input id="xMinInput" type="number" step="any" value="-8" aria-label="X 轴最小值"></label>
+                <span class="field-dash">—</span>
+                <label class="mini-field"><span>max</span><input id="xMaxInput" type="number" step="any" value="8" aria-label="X 轴最大值"></label>
+              </div>
+            </div>
+            <div class="range-block">
+              <div class="range-label"><span>Y 轴范围</span><small>留空则自动</small></div>
+              <div class="field-pair">
+                <label class="mini-field"><span>min</span><input id="yMinInput" type="number" step="any" placeholder="auto" aria-label="Y 轴最小值"></label>
+                <span class="field-dash">—</span>
+                <label class="mini-field"><span>max</span><input id="yMaxInput" type="number" step="any" placeholder="auto" aria-label="Y 轴最大值"></label>
+              </div>
+            </div>
+
+            <div class="switch-list">
+              <label class="switch-row">
+                <span class="switch-copy"><strong>坐标网格</strong><small>显示主次刻度与坐标轴</small></span>
+                <input type="checkbox" id="gridToggle" checked>
+                <span class="switch" aria-hidden="true"></span>
+              </label>
+              <label class="switch-row">
+                <span class="switch-copy"><strong>导数曲线</strong><small>以虚线叠加 f′(x)</small></span>
+                <input type="checkbox" id="derivativeToggle">
+                <span class="switch" aria-hidden="true"></span>
+              </label>
+              <label class="switch-row">
+                <span class="switch-copy"><strong>关键点标记</strong><small>标注零点与极值</small></span>
+                <input type="checkbox" id="pointsToggle" checked>
+                <span class="switch" aria-hidden="true"></span>
+              </label>
+            </div>
+          </section>
+
+          <section class="card syntax-card">
+            <div class="syntax-head">
+              <span class="syntax-icon">ƒ</span>
+              <div><strong>书写小贴士</strong><p>乘号可以省略，常数用 <code>pi</code> 或 <code>e</code>。</p></div>
+            </div>
+            <div class="syntax-examples">
+              <button type="button" data-plot-preset="sin(x) * exp(-x^2/8)">阻尼振荡</button>
+              <button type="button" data-plot-preset="x^3 - 3x">三次曲线</button>
+              <button type="button" data-plot-preset="sqrt(1 - x^2)">半圆</button>
+            </div>
+          </section>
+        </aside>
+
+        <div class="studio-main">
+          <section class="card plot-card">
+            <div class="plot-toolbar">
+              <div class="plot-title">
+                <span class="live-dot"></span>
+                <span>直角坐标系</span>
+                <small id="plotStatus">等待输入</small>
+              </div>
+              <div class="toolbar-group">
+                <button class="icon-btn small" id="zoomInBtn" type="button" title="放大" aria-label="放大">
+                  <svg class="icon"><use href="#i-zoom-in"/></svg>
+                </button>
+                <button class="icon-btn small" id="zoomOutBtn" type="button" title="缩小" aria-label="缩小">
+                  <svg class="icon"><use href="#i-zoom-out"/></svg>
+                </button>
+                <button class="icon-btn small" id="resetViewBtn" type="button" title="重置视图" aria-label="重置视图">
+                  <svg class="icon"><use href="#i-reset"/></svg>
+                </button>
+                <span class="toolbar-sep"></span>
+                <button class="icon-btn small" id="exportPlotBtn" type="button" title="导出 PNG" aria-label="导出图像">
+                  <svg class="icon"><use href="#i-download"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="canvas-shell" id="plotShell">
+              <canvas id="functionCanvas" tabindex="0" aria-label="函数图像画布。拖动平移，滚轮缩放，方向键移动。"></canvas>
+              <div class="canvas-empty" id="canvasEmpty">
+                <span>∿</span>
+                <p>输入一个函数开始绘制</p>
+              </div>
+            </div>
+
+            <div class="plot-footer">
+              <div class="canvas-hint">
+                <svg class="icon"><use href="#i-command"/></svg>
+                <span>拖动平移 · 滚轮缩放 · 悬停追踪</span>
+              </div>
+              <div class="plot-readout" id="plotReadout">
+                <span class="readout-x">x <b>—</b></span>
+                <span class="readout-y">y <b>—</b></span>
+              </div>
+            </div>
+          </section>
+
+          <div class="analysis-grid">
+            <section class="card insight-card">
+              <div class="card-head compact">
+                <div>
+                  <p class="card-kicker">ANALYSIS</p>
+                  <h2>图像观察</h2>
+                </div>
+                <span class="soft-badge" id="analysisBadge">主函数</span>
+              </div>
+              <div class="insight-grid">
+                <div class="insight-block">
+                  <span class="insight-label">零点 · x-intercepts</span>
+                  <div class="point-chips" id="rootsList"><span class="muted-chip">暂无</span></div>
+                </div>
+                <div class="insight-block">
+                  <span class="insight-label">极值点 · extrema</span>
+                  <div class="point-chips" id="extremaList"><span class="muted-chip">暂无</span></div>
+                </div>
+                <div class="insight-block">
+                  <span class="insight-label">Y 轴截距</span>
+                  <div class="point-chips" id="interceptList"><span class="muted-chip">暂无</span></div>
+                </div>
+              </div>
+            </section>
+
+            <section class="card values-card">
+              <div class="card-head compact">
+                <div>
+                  <p class="card-kicker">TABLE</p>
+                  <h2>数值采样</h2>
+                </div>
+                <span class="soft-badge" id="tableBadge">f₁(x)</span>
+              </div>
+              <div class="value-table-wrap">
+                <table class="value-table">
+                  <thead><tr><th>x</th><th>f(x)</th></tr></thead>
+                  <tbody id="valueTableBody">
+                    <tr><td>—</td><td>—</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </section>
+          </div>
+
+          <section class="card gallery-card" id="functionGalleryCard">
+            <div class="card-head gallery-head">
+              <div>
+                <p class="card-kicker">COMMON FUNCTIONS</p>
+                <h2>常见函数图鉴</h2>
+                <p class="gallery-subtitle">点击卡片查看图像、定义域与图像特征，也可以直接绘制到画布。</p>
+              </div>
+              <span class="soft-badge"><svg class="icon"><use href="#i-gallery"/></svg> 点击查看</span>
+            </div>
+            <div class="gallery-grid" id="functionGallery"></div>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= 积分计算 ======================= -->
+    <section class="view" id="view-integral" data-view-panel="integral">
+      <div class="view-intro">
+        <div class="intro-copy">
+          <p class="eyebrow"><span>02</span> CALCULUS STUDIO</p>
+          <h1>从面积，到<span class="accent-serif">原函数</span>。</h1>
+          <p class="intro-desc">点击符号输入，求解定积分与不定积分。不只给出答案，也把换元、分部与代入过程摊开来看。</p>
+        </div>
+        <div class="intro-aside">
+          <div class="intro-stat"><strong>∫</strong><span>符号积分引擎</span></div>
+          <div class="intro-stat"><strong>C</strong><span>不定积分常数</span></div>
+          <div class="intro-stat"><strong>F(b)−F(a)</strong><span>牛顿–莱布尼茨</span></div>
+        </div>
+      </div>
+
+      <div class="workspace-grid integral-workspace">
+        <aside class="panel-stack integral-controls">
+          <section class="card integral-input-card">
+            <div class="card-head">
+              <div>
+                <p class="card-kicker">INTEGRAL</p>
+                <h2>积分表达式</h2>
+              </div>
+              <div class="segmented" id="integralType" role="tablist" aria-label="积分类型">
+                <button type="button" class="is-active" data-type="indefinite" role="tab" aria-selected="true">不定积分</button>
+                <button type="button" data-type="definite" role="tab" aria-selected="false">定积分</button>
+              </div>
+            </div>
+
+            <div class="integral-display" id="integralDisplay">
+              <span class="integral-sign">∫</span>
+              <div class="integral-bounds" id="integralBoundsPreview" aria-hidden="true">
+                <span class="bound-top" id="boundTopPreview">1</span>
+                <span class="bound-bottom" id="boundBottomPreview">0</span>
+              </div>
+              <div class="integral-body" id="integralPreview"></div>
+              <span class="differential">d<em>x</em></span>
+            </div>
+
+            <div class="editor-section">
+              <div class="editor-label">
+                <label for="integrandInput">被积函数 <span>integrand</span></label>
+                <div class="editor-tools">
+                  <button type="button" class="text-icon-btn" id="clearIntegrandBtn" title="清空">
+                    <svg class="icon"><use href="#i-trash"/></svg><span>清空</span>
+                  </button>
+                  <button type="button" class="text-icon-btn" id="backspaceBtn" title="退格">
+                    <svg class="icon"><use href="#i-backspace"/></svg>
+                  </button>
+                </div>
+              </div>
+              <div class="expression-field" id="integrandField">
+                <span class="field-prefix">ƒ(x) =</span>
+                <input id="integrandInput" type="text" value="x * exp(x)" spellcheck="false" autocomplete="off" autocapitalize="off" aria-describedby="syntaxNote">
+                <span class="caret-glow" aria-hidden="true"></span>
+              </div>
+              <p class="field-error" id="integrandError" role="alert"></p>
+            </div>
+
+            <div class="bounds-section" id="boundsSection">
+              <div class="bounds-heading">
+                <span>积分上下限</span>
+                <small>支持 pi、e、sqrt(2) 等常数</small>
+              </div>
+              <div class="bound-fields">
+                <label class="bound-field">
+                  <span>下限 <em>lower</em></span>
+                  <input id="lowerBoundInput" type="text" value="0" spellcheck="false" autocomplete="off">
+                </label>
+                <span class="bound-arrow">→</span>
+                <label class="bound-field">
+                  <span>上限 <em>upper</em></span>
+                  <input id="upperBoundInput" type="text" value="1" spellcheck="false" autocomplete="off">
+                </label>
+              </div>
+              <p class="field-error" id="boundsError" role="alert"></p>
+            </div>
+
+            <div class="keypad-section">
+              <div class="keypad-head">
+                <div class="keypad-tabs" role="tablist" aria-label="符号键盘分类">
+                  <button type="button" class="is-active" data-keypad="basic" role="tab">常用</button>
+                  <button type="button" data-keypad="functions" role="tab">函数</button>
+                  <button type="button" data-keypad="templates" role="tab">模板</button>
+                </div>
+                <span class="keypad-note">点击插入</span>
+              </div>
+
+              <div class="keypad-panel is-active" data-keypad-panel="basic">
+                <div class="keypad-grid basic-grid">
+                  <button type="button" data-insert="7">7</button>
+                  <button type="button" data-insert="8">8</button>
+                  <button type="button" data-insert="9">9</button>
+                  <button type="button" class="op-key" data-insert="/">÷</button>
+                  <button type="button" data-insert="(">(</button>
+                  <button type="button" data-insert=")">)</button>
+                  <button type="button" data-insert="4">4</button>
+                  <button type="button" data-insert="5">5</button>
+                  <button type="button" data-insert="6">6</button>
+                  <button type="button" class="op-key" data-insert="*">×</button>
+                  <button type="button" class="var-key" data-insert="x">x</button>
+                  <button type="button" class="op-key" data-insert="^">x<sup>n</sup></button>
+                  <button type="button" data-insert="1">1</button>
+                  <button type="button" data-insert="2">2</button>
+                  <button type="button" data-insert="3">3</button>
+                  <button type="button" class="op-key" data-insert="-">−</button>
+                  <button type="button" class="const-key" data-insert="pi">π</button>
+                  <button type="button" class="const-key" data-insert="e">e</button>
+                  <button type="button" data-insert="0">0</button>
+                  <button type="button" data-insert=".">.</button>
+                  <button type="button" class="op-key" data-insert="+">+</button>
+                  <button type="button" class="fn-key" data-insert="sqrt(">√</button>
+                  <button type="button" class="fn-key" data-insert="abs(">|x|</button>
+                  <button type="button" class="fn-key" data-insert="ln(">ln</button>
+                </div>
+              </div>
+
+              <div class="keypad-panel" data-keypad-panel="functions">
+                <div class="keypad-grid function-grid">
+                  <button type="button" class="fn-key" data-insert="sin(">sin</button>
+                  <button type="button" class="fn-key" data-insert="cos(">cos</button>
+                  <button type="button" class="fn-key" data-insert="tan(">tan</button>
+                  <button type="button" class="fn-key" data-insert="cot(">cot</button>
+                  <button type="button" class="fn-key" data-insert="sec(">sec</button>
+                  <button type="button" class="fn-key" data-insert="csc(">csc</button>
+                  <button type="button" class="fn-key" data-insert="asin(">arcsin</button>
+                  <button type="button" class="fn-key" data-insert="acos(">arccos</button>
+                  <button type="button" class="fn-key" data-insert="atan(">arctan</button>
+                  <button type="button" class="fn-key" data-insert="sinh(">sinh</button>
+                  <button type="button" class="fn-key" data-insert="cosh(">cosh</button>
+                  <button type="button" class="fn-key" data-insert="tanh(">tanh</button>
+                  <button type="button" class="fn-key" data-insert="e^(">eˣ</button>
+                  <button type="button" class="fn-key" data-insert="log(">log</button>
+                  <button type="button" class="fn-key" data-insert="erf(">erf</button>
+                  <button type="button" class="const-key" data-insert="pi">π</button>
+                  <button type="button" class="const-key" data-insert="e">e</button>
+                  <button type="button" class="var-key" data-insert="x">x</button>
+                </div>
+              </div>
+
+              <div class="keypad-panel" data-keypad-panel="templates">
+                <div class="template-grid" id="templateGrid">
+                  <button type="button" data-template="x^2" data-tex="x^2">
+                    <span class="template-copy"><strong>x<sup>2</sup></strong><small>幂函数</small></span>
+                    <svg class="icon"><use href="#i-arrow"/></svg>
+                  </button>
+                  <button type="button" data-template="1/x" data-tex="\frac{1}{x}">
+                    <span class="template-copy"><strong>1/x</strong><small>倒数</small></span>
+                    <svg class="icon"><use href="#i-arrow"/></svg>
+                  </button>
+                  <button type="button" data-template="exp(x)" data-tex="e^{x}">
+                    <span class="template-copy"><strong>e<sup>x</sup></strong><small>指数</small></span>
+                    <svg class="icon"><use href="#i-arrow"/></svg>
+                  </button>
+                  <button type="button" data-template="sin(2*x)" data-tex="\sin(2x)">
+                    <span class="template-copy"><strong>sin(2x)</strong><small>三角</small></span>
+                    <svg class="icon"><use href="#i-arrow"/></svg>
+                  </button>
+                  <button type="button" data-template="ln(x)" data-tex="\ln x">
+                    <span class="template-copy"><strong>ln x</strong><small>对数</small></span>
+                    <svg class="icon"><use href="#i-arrow"/></svg>
+                  </button>
+                  <button type="button" data-template="x * exp(x)" data-tex="x e^{x}">
+                    <span class="template-copy"><strong>x·e<sup>x</sup></strong><small>分部积分</small></span>
+                    <svg class="icon"><use href="#i-arrow"/></svg>
+                  </button>
+                  <button type="button" data-template="1/(1+x^2)" data-tex="\frac{1}{1+x^2}">
+                    <span class="template-copy"><strong>1/(1+x²)</strong><small>反正切</small></span>
+                    <svg class="icon"><use href="#i-arrow"/></svg>
+                  </button>
+                  <button type="button" data-template="1/sqrt(1-x^2)" data-tex="\frac{1}{\sqrt{1-x^2}}">
+                    <span class="template-copy"><strong>1/√(1−x²)</strong><small>反正弦</small></span>
+                    <svg class="icon"><use href="#i-arrow"/></svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="calculate-row">
+              <button class="primary-btn" id="calculateBtn" type="button">
+                <span class="btn-glow"></span>
+                <span>开始计算</span>
+                <span class="shortcut">⌘↵</span>
+                <svg class="icon"><use href="#i-arrow"/></svg>
+              </button>
+              <button class="icon-btn" id="randomExampleBtn" type="button" title="换一个例子" aria-label="换一个例子">
+                <svg class="icon"><use href="#i-spark"/></svg>
+              </button>
+            </div>
+            <p class="syntax-note" id="syntaxNote">支持隐式乘法与自然书写，如 <code>2x</code>、<code>sin(2x)</code>、<code>e^(-x^2)</code>；<code>exp(x)</code> 与 <code>e^x</code> 等价。</p>
+          </section>
+
+          <section class="card history-card">
+            <div class="card-head compact">
+              <div>
+                <p class="card-kicker">RECENT</p>
+                <h2>计算记录</h2>
+              </div>
+              <button class="ghost-link" id="clearHistoryBtn" type="button">清空</button>
+            </div>
+            <div class="history-list" id="historyList">
+              <p class="history-empty">完成一次计算后，结果会自动保存在这里。</p>
+            </div>
+          </section>
+        </aside>
+
+        <div class="integral-output">
+          <div class="empty-state" id="integralEmpty">
+            <div class="empty-art" aria-hidden="true">
+              <span class="empty-int">∫</span>
+              <span class="empty-line line-a"></span>
+              <span class="empty-line line-b"></span>
+              <span class="empty-line line-c"></span>
+              <span class="empty-dot dot-a"></span>
+              <span class="empty-dot dot-b"></span>
+            </div>
+            <p class="eyebrow"><span>READY</span> WHEN YOU ARE</p>
+            <h2>让符号，替你完成推导。</h2>
+            <p>输入被积函数并点击「开始计算」，这里会展示符号结果、解答步骤与数值验证。</p>
+            <div class="empty-hints">
+              <span><kbd>Ctrl</kbd><kbd>↵</kbd> 快速计算</span>
+              <span><kbd>Alt</kbd><kbd>2</kbd> 切换到积分</span>
+            </div>
+          </div>
+
+          <section class="card result-card is-hidden" id="resultCard">
+            <div class="result-topline">
+              <div class="result-heading">
+                <p class="card-kicker" id="resultKicker">SYMBOLIC RESULT</p>
+                <h2 id="resultTitle">不定积分结果</h2>
+              </div>
+              <div class="result-badges">
+                <span class="verify-badge" id="verifyBadge">
+                  <svg class="icon"><use href="#i-check"/></svg>
+                  <span>求导验证通过</span>
+                </span>
+                <span class="method-badge" id="methodBadge">幂函数公式</span>
+              </div>
+            </div>
+
+            <div class="result-formula" id="resultFormula"></div>
+            <p class="result-caption" id="resultCaption"></p>
+
+            <div class="result-secondary" id="resultSecondary">
+              <div class="secondary-item">
+                <span>近似值</span>
+                <strong id="approxValue">—</strong>
+              </div>
+              <div class="secondary-item">
+                <span>数值校验</span>
+                <strong id="numericCheck">—</strong>
+              </div>
+              <div class="secondary-item">
+                <span>计算耗时</span>
+                <strong id="computeTime">—</strong>
+              </div>
+            </div>
+
+            <div class="result-actions">
+              <button class="secondary-btn" id="copyLatexBtn" type="button">
+                <svg class="icon"><use href="#i-copy"/></svg><span>复制 LaTeX</span>
+              </button>
+              <button class="secondary-btn" id="copyResultBtn" type="button">
+                <svg class="icon"><use href="#i-copy"/></svg><span>复制结果</span>
+              </button>
+              <button class="secondary-btn" id="insertResultBtn" type="button">
+                <svg class="icon"><use href="#i-arrow"/></svg><span>作为新被积函数</span>
+              </button>
+            </div>
+          </section>
+
+          <section class="card error-card is-hidden" id="errorCard">
+            <div class="error-symbol">!</div>
+            <div>
+              <h3 id="errorTitle">无法完成计算</h3>
+              <p id="errorMessage"></p>
+              <div class="error-actions">
+                <button class="secondary-btn" id="errorExampleBtn" type="button"><svg class="icon"><use href="#i-spark"/></svg><span>试一个例子</span></button>
+              </div>
+            </div>
+          </section>
+
+          <section class="card steps-card is-hidden" id="stepsCard">
+            <div class="card-head steps-head">
+              <div>
+                <p class="card-kicker">SOLUTION PATH</p>
+                <h2>解题步骤</h2>
+              </div>
+              <span class="steps-summary" id="stepsSummary">逐步推导</span>
+            </div>
+            <ol class="steps-list" id="stepsList"></ol>
+            <p class="steps-footnote">
+              <svg class="icon"><use href="#i-info"/></svg>
+              结果默认在函数定义域内成立；不定积分中的 <span class="inline-math">C</span> 表示任意常数。
+            </p>
+          </section>
+
+          <section class="card area-card is-hidden" id="areaCard">
+            <div class="card-head compact">
+              <div>
+                <p class="card-kicker">GEOMETRIC VIEW</p>
+                <h2>积分区域</h2>
+              </div>
+              <label class="mini-switch">
+                <input type="checkbox" id="antiderivativeToggle">
+                <span>叠加 F(x)</span>
+              </label>
+            </div>
+            <div class="area-canvas-shell">
+              <canvas id="areaCanvas" aria-label="定积分区域示意图"></canvas>
+              <div class="area-legend">
+                <span><i class="legend-swatch positive"></i>正面积</span>
+                <span><i class="legend-swatch negative"></i>负面积</span>
+                <span id="areaValueLabel">A = —</span>
+              </div>
+            </div>
+            <p class="area-note">着色区域为曲线与 x 轴之间的有向面积；x 轴下方区域计为负值。</p>
+          </section>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================= 积分应用 ======================= -->
+    <section class="view" id="view-apps" data-view-panel="apps">
+      <div class="view-intro">
+        <div class="intro-copy">
+          <p class="eyebrow"><span>03</span> GEOMETRY STUDIO</p>
+          <h1>让积分，量出<span class="accent-serif">形状</span>。</h1>
+          <p class="intro-desc">把定积分变成几何直觉：两曲线之间的面积、旋转体体积，以及极坐标曲线围成的区域。</p>
+        </div>
+        <div class="intro-aside">
+          <div class="intro-stat"><strong>A</strong><span>平面面积</span></div>
+          <div class="intro-stat"><strong>V</strong><span>旋转体体积</span></div>
+          <div class="intro-stat"><strong>r(θ)</strong><span>极坐标面积</span></div>
+        </div>
+      </div>
+
+      <div class="workspace-grid apps-workspace">
+        <aside class="panel-stack apps-controls">
+          <section class="card app-input-card">
+            <div class="card-head">
+              <div>
+                <p class="card-kicker">GEOMETRIC MODELS</p>
+                <h2>选择积分模型</h2>
+              </div>
+              <span class="soft-badge">定积分应用</span>
+            </div>
+
+            <div class="app-mode-grid" id="appModeGrid">
+              <button type="button" class="app-mode is-active" data-app-mode="area">
+                <span class="app-mode-symbol">∫</span>
+                <span><strong>平面面积</strong><small>两曲线之间</small></span>
+              </button>
+              <button type="button" class="app-mode" data-app-mode="volume-x">
+                <span class="app-mode-symbol">V</span>
+                <span><strong>绕 x 轴体积</strong><small>圆盘 / 垫圈法</small></span>
+              </button>
+              <button type="button" class="app-mode" data-app-mode="volume-y">
+                <span class="app-mode-symbol">↻</span>
+                <span><strong>绕 y 轴体积</strong><small>柱壳法</small></span>
+              </button>
+              <button type="button" class="app-mode" data-app-mode="polar">
+                <span class="app-mode-symbol">r</span>
+                <span><strong>极坐标面积</strong><small>扇形累加</small></span>
+              </button>
+            </div>
+
+            <div class="app-model-preview">
+              <span class="app-model-label">MODEL</span>
+              <div id="appFormulaPreview"></div>
+            </div>
+
+            <div class="app-fields" id="appFields">
+              <label class="app-field" id="appTopField">
+                <span class="app-field-label"><b id="appTopLabel">上边界 f(x)</b><small id="appTopHint">y 较大的一条曲线</small></span>
+                <span class="app-expression">
+                  <span class="app-prefix" id="appTopPrefix">f(x) =</span>
+                  <input id="appTopInput" type="text" value="sin(x)" spellcheck="false" autocomplete="off">
+                </span>
+              </label>
+              <label class="app-field" id="appBottomField">
+                <span class="app-field-label"><b id="appBottomLabel">下边界 g(x)</b><small id="appBottomHint">填 0 即曲线与 x 轴之间</small></span>
+                <span class="app-expression">
+                  <span class="app-prefix" id="appBottomPrefix">g(x) =</span>
+                  <input id="appBottomInput" type="text" value="0" spellcheck="false" autocomplete="off">
+                </span>
+              </label>
+              <label class="app-field is-hidden" id="appPolarField">
+                <span class="app-field-label"><b>极径 r(θ)</b><small>用 theta 表示极角</small></span>
+                <span class="app-expression">
+                  <span class="app-prefix">r(θ) =</span>
+                  <input id="appPolarInput" type="text" value="1+cos(theta)" spellcheck="false" autocomplete="off">
+                </span>
+              </label>
+            </div>
+
+            <div class="app-bounds">
+              <div class="app-bounds-head">
+                <span id="appBoundsLabel">积分区间</span>
+                <small id="appBoundsHint">沿 x 轴，从左到右</small>
+              </div>
+              <div class="bound-fields">
+                <label class="bound-field">
+                  <span id="appLowerLabel">下限 a</span>
+                  <input id="appLowerInput" type="text" value="0" spellcheck="false" autocomplete="off">
+                </label>
+                <span class="bound-arrow">→</span>
+                <label class="bound-field">
+                  <span id="appUpperLabel">上限 b</span>
+                  <input id="appUpperInput" type="text" value="pi" spellcheck="false" autocomplete="off">
+                </label>
+              </div>
+            </div>
+
+            <div class="app-symbol-row">
+              <span>插入</span>
+              <button type="button" data-app-insert="e^(">eˣ</button>
+              <button type="button" data-app-insert="sin(">sin</button>
+              <button type="button" data-app-insert="cos(">cos</button>
+              <button type="button" data-app-insert="sqrt(">√</button>
+              <button type="button" data-app-insert="pi">π</button>
+              <button type="button" data-app-insert="theta">θ</button>
+              <button type="button" data-app-insert="^">^</button>
+              <button type="button" data-app-insert="(">(</button>
+              <button type="button" data-app-insert=")">)</button>
+            </div>
+
+            <p class="app-hint" id="appHint">面积取曲线差值的绝对值；绕 x 轴旋转默认使用垫圈法。</p>
+
+            <div class="calculate-row">
+              <button class="primary-btn" id="appCalculateBtn" type="button">
+                <span class="btn-glow"></span>
+                <span>计算几何量</span>
+                <span class="shortcut">Ctrl↵</span>
+                <svg class="icon"><use href="#i-arrow"/></svg>
+              </button>
+            </div>
+          </section>
+
+          <section class="card app-examples-card">
+            <div class="card-head compact">
+              <div>
+                <p class="card-kicker">CLASSIC MODELS</p>
+                <h2>经典模型</h2>
+              </div>
+            </div>
+            <div class="app-example-list" id="appExampleList">
+              <button type="button" data-app-example="area-curves"><span>∫</span><span><strong>两曲线之间</strong><small>y=x² 与 y=x，0→1</small></span></button>
+              <button type="button" data-app-example="sphere"><span>V</span><span><strong>半圆旋转</strong><small>球体体积 4π/3</small></span></button>
+              <button type="button" data-app-example="shell"><span>↻</span><span><strong>柱壳体积</strong><small>y=x 与 y=x²，绕 y 轴</small></span></button>
+              <button type="button" data-app-example="cardioid"><span>r</span><span><strong>心形线面积</strong><small>r=1+cos θ</small></span></button>
+            </div>
+          </section>
+        </aside>
+
+        <div class="apps-output">
+          <div class="empty-state app-empty" id="appEmpty">
+            <div class="app-empty-art" aria-hidden="true">
+              <span class="app-empty-shape shape-a"></span>
+              <span class="app-empty-shape shape-b"></span>
+              <span class="app-empty-shape shape-c"></span>
+              <span class="app-empty-axis"></span>
+            </div>
+            <p class="eyebrow"><span>GEOMETRY</span> FROM INTEGRATION</p>
+            <h2>让积分，量出形状。</h2>
+            <p>选择一种几何模型，填入边界曲线与区间，计算机会给出数值、积分模型和区域示意图。</p>
+            <div class="empty-hints">
+              <span>平面面积</span>
+              <span>旋转体体积</span>
+              <span>极坐标面积</span>
+            </div>
+          </div>
+
+          <section class="card result-card is-hidden" id="appResultCard">
+            <div class="result-topline">
+              <div class="result-heading">
+                <p class="card-kicker" id="appResultKicker">GEOMETRIC RESULT</p>
+                <h2 id="appResultTitle">平面区域面积</h2>
+              </div>
+              <div class="result-badges">
+                <span class="verify-badge" id="appVerifyBadge"><svg class="icon"><use href="#i-check"/></svg><span>数值收敛</span></span>
+                <span class="method-badge" id="appUnitBadge">unit²</span>
+              </div>
+            </div>
+
+            <div class="result-formula" id="appResultFormula"></div>
+            <p class="result-caption" id="appResultCaption"></p>
+
+            <div class="result-secondary">
+              <div class="secondary-item"><span>数值结果</span><strong id="appResultValue">—</strong></div>
+              <div class="secondary-item"><span>积分方法</span><strong id="appResultMethod">—</strong></div>
+              <div class="secondary-item"><span>收敛性</span><strong id="appResultConvergence">—</strong></div>
+            </div>
+
+            <div class="result-actions">
+              <button class="secondary-btn" id="appCopyBtn" type="button"><svg class="icon"><use href="#i-copy"/></svg><span>复制结果</span></button>
+              <button class="secondary-btn" id="appSendBtn" type="button"><svg class="icon"><use href="#i-arrow"/></svg><span>查看对应积分</span></button>
+            </div>
+          </section>
+
+          <section class="card app-visual-card is-hidden" id="appVisualCard">
+            <div class="card-head compact">
+              <div>
+                <p class="card-kicker">GEOMETRIC VIEW</p>
+                <h2 id="appVisualTitle">区域示意</h2>
+              </div>
+              <span class="soft-badge" id="appVisualBadge">面积</span>
+            </div>
+            <div class="app-canvas-shell">
+              <canvas id="appsCanvas" aria-label="积分应用几何示意图"></canvas>
+              <canvas id="polarCanvas" class="polar-canvas is-hidden" aria-label="极坐标区域示意图"></canvas>
+              <div class="area-legend app-legend">
+                <span><i class="legend-swatch positive"></i><b id="appLegendTop">上边界</b></span>
+                <span id="appLegendItemBottom"><i class="legend-swatch negative"></i><b id="appLegendBottom">下边界</b></span>
+                <span id="appVisualValue">A ≈ —</span>
+              </div>
+            </div>
+            <p class="area-note" id="appVisualNote">着色区域为两条曲线之间的平面区域。</p>
+          </section>
+
+          <section class="card steps-card is-hidden" id="appStepsCard">
+            <div class="card-head steps-head">
+              <div>
+                <p class="card-kicker">SOLUTION PATH</p>
+                <h2>建模与计算</h2>
+              </div>
+              <span class="steps-summary" id="appStepsSummary">4 步</span>
+            </div>
+            <ol class="steps-list" id="appStepsList"></ol>
+            <p class="steps-footnote">
+              <svg class="icon"><use href="#i-info"/></svg>
+              结果为数值积分近似值；面积单位为 <span class="inline-math">unit²</span>，体积单位为 <span class="inline-math">unit³</span>。
+            </p>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p><span class="brand-mini">∫</span> 格物 MathLab <span class="footer-dot">·</span> 函数、积分与几何，所有计算均在本地浏览器完成，输入不会离开你的设备。</p>
+    <p class="footer-meta">Built for curious minds <span>·</span> KaTeX + Nerdamer</p>
+  </footer>
+
+  <!-- 公式手册 -->
+  <div class="modal" id="formulaModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="formulaTitle">
+      <div class="modal-head">
+        <div>
+          <p class="card-kicker">REFERENCE</p>
+          <h2 id="formulaTitle">公式手册</h2>
+          <p>点击任意公式，即可填入积分编辑器。</p>
+        </div>
+        <button class="icon-btn" type="button" data-close-modal aria-label="关闭">
+          <svg class="icon"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <section class="reference-section">
+          <h3><span>01</span> 基本积分表</h3>
+          <div class="formula-list" id="formulaList">
+            <button type="button" class="formula-item" data-formula="x^2" data-formula-note="幂函数">
+              <span class="formula-tex" data-tex="\int x^n\,dx=\frac{x^{n+1}}{n+1}+C"></span>
+              <span class="formula-use">使用 <svg class="icon"><use href="#i-arrow"/></svg></span>
+            </button>
+            <button type="button" class="formula-item" data-formula="1/x" data-formula-note="倒数">
+              <span class="formula-tex" data-tex="\int \frac{1}{x}\,dx=\ln|x|+C"></span>
+              <span class="formula-use">使用 <svg class="icon"><use href="#i-arrow"/></svg></span>
+            </button>
+            <button type="button" class="formula-item" data-formula="exp(x)" data-formula-note="指数函数">
+              <span class="formula-tex" data-tex="\int e^x\,dx=e^x+C"></span>
+              <span class="formula-use">使用 <svg class="icon"><use href="#i-arrow"/></svg></span>
+            </button>
+            <button type="button" class="formula-item" data-formula="sin(x)" data-formula-note="正弦">
+              <span class="formula-tex" data-tex="\int \sin x\,dx=-\cos x+C"></span>
+              <span class="formula-use">使用 <svg class="icon"><use href="#i-arrow"/></svg></span>
+            </button>
+            <button type="button" class="formula-item" data-formula="cos(x)" data-formula-note="余弦">
+              <span class="formula-tex" data-tex="\int \cos x\,dx=\sin x+C"></span>
+              <span class="formula-use">使用 <svg class="icon"><use href="#i-arrow"/></svg></span>
+            </button>
+            <button type="button" class="formula-item" data-formula="sec(x)^2" data-formula-note="正割平方">
+              <span class="formula-tex" data-tex="\int \sec^2 x\,dx=\tan x+C"></span>
+              <span class="formula-use">使用 <svg class="icon"><use href="#i-arrow"/></svg></span>
+            </button>
+            <button type="button" class="formula-item" data-formula="1/(1+x^2)" data-formula-note="反正切">
+              <span class="formula-tex" data-tex="\int \frac{dx}{1+x^2}=\arctan x+C"></span>
+              <span class="formula-use">使用 <svg class="icon"><use href="#i-arrow"/></svg></span>
+            </button>
+            <button type="button" class="formula-item" data-formula="1/sqrt(1-x^2)" data-formula-note="反正弦">
+              <span class="formula-tex" data-tex="\int \frac{dx}{\sqrt{1-x^2}}=\arcsin x+C"></span>
+              <span class="formula-use">使用 <svg class="icon"><use href="#i-arrow"/></svg></span>
+            </button>
+            <button type="button" class="formula-item" data-formula="ln(x)" data-formula-note="对数">
+              <span class="formula-tex" data-tex="\int \ln x\,dx=x\ln x-x+C"></span>
+              <span class="formula-use">使用 <svg class="icon"><use href="#i-arrow"/></svg></span>
+            </button>
+            <button type="button" class="formula-item" data-formula="tan(x)" data-formula-note="正切">
+              <span class="formula-tex" data-tex="\int \tan x\,dx=-\ln|\cos x|+C"></span>
+              <span class="formula-use">使用 <svg class="icon"><use href="#i-arrow"/></svg></span>
+            </button>
+          </div>
+        </section>
+        <section class="reference-section">
+          <h3><span>02</span> 积分方法</h3>
+          <div class="method-list">
+            <article class="method-card">
+              <div class="method-num">A</div>
+              <div>
+                <h4>线性换元</h4>
+                <p>当内层是 <span class="inline-math">ax+b</span> 时，令 <span class="inline-math">u=ax+b</span>，则 <span class="inline-math">dx=du/a</span>。</p>
+                <span class="method-tex" data-tex="\int f(ax+b)\,dx=\frac{1}{a}\int f(u)\,du"></span>
+              </div>
+            </article>
+            <article class="method-card">
+              <div class="method-num">B</div>
+              <div>
+                <h4>分部积分</h4>
+                <p>适用于多项式与指数、三角函数或对数的乘积。口诀：反对幂指三，先后取 <span class="inline-math">u</span>。</p>
+                <span class="method-tex" data-tex="\int u\,dv=uv-\int v\,du"></span>
+              </div>
+            </article>
+            <article class="method-card">
+              <div class="method-num">C</div>
+              <div>
+                <h4>牛顿–莱布尼茨</h4>
+                <p>若 <span class="inline-math">F'(x)=f(x)</span>，则定积分可由原函数在两端点的差直接得到。</p>
+                <span class="method-tex" data-tex="\int_a^b f(x)\,dx=F(b)-F(a)"></span>
+              </div>
+            </article>
+          </div>
+        </section>
+        <section class="reference-section">
+          <h3><span>03</span> 输入语法</h3>
+          <div class="syntax-table">
+            <div><code>2x</code><span>隐式乘法，等价于 2·x</span></div>
+            <div><code>x^3</code><span>幂，等价于 x³</span></div>
+            <div><code>sqrt(x)</code><span>平方根</span></div>
+            <div><code>abs(x)</code><span>绝对值</span></div>
+            <div><code>e^(-x^2)</code><span>自然指数</span></div>
+            <div><code>ln(x)</code> / <code>log(x)</code><span>自然对数</span></div>
+            <div><code>pi</code><span>圆周率 π</span></div>
+            <div><code>sin(2x+pi/4)</code><span>线性内层三角</span></div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <!-- 使用说明 -->
+  <div class="modal" id="helpModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-panel modal-panel-narrow" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+      <div class="modal-head">
+        <div>
+          <p class="card-kicker">GUIDE</p>
+          <h2 id="helpTitle">使用说明</h2>
+          <p>一个安静、专注的数学工作台。</p>
+        </div>
+        <button class="icon-btn" type="button" data-close-modal aria-label="关闭">
+          <svg class="icon"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <div class="modal-body help-body">
+        <div class="help-step"><span>01</span><div><h4>函数绘图与输入法</h4><p>输入显函数 f(x)，可同时叠加最多 5 条曲线。函数输入法提供常用符号与模板；<code>exp(x)</code> 与 <code>e^x</code> 等价。页面下方的「常见函数图鉴」可查看 12 种基本函数的图像与性质。</p></div></div>
+        <div class="help-step"><span>02</span><div><h4>积分计算</h4><p>在「不定积分 / 定积分」之间切换。点击符号键盘或模板输入被积函数；定积分需填写上下限。计算后可查看符号结果、逐步推导与区域图像。</p></div></div>
+        <div class="help-step"><span>03</span><div><h4>积分应用</h4><p>计算两条曲线之间的平面面积、绕 x 轴或 y 轴的旋转体体积，以及极坐标曲线围成的面积。结果包含积分模型、数值结果和几何示意图。</p></div></div>
+        <div class="help-step"><span>04</span><div><h4>键盘快捷键</h4><p><kbd>Alt</kbd> + <kbd>1</kbd> 函数绘图，<kbd>Alt</kbd> + <kbd>2</kbd> 积分计算，<kbd>Alt</kbd> + <kbd>3</kbd> 积分应用，<kbd>Ctrl</kbd> + <kbd>Enter</kbd> 开始计算，<kbd>Alt</kbd> + <kbd>T</kbd> 切换主题。</p></div></div>
+        <div class="help-note">
+          <svg class="icon"><use href="#i-info"/></svg>
+          <p>符号积分由本地引擎完成，数值结果经过独立数值积分交叉校验。对于没有初等原函数的表达式，会明确提示并给出可用的数值结果。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 函数图鉴详情 -->
+  <div class="modal" id="galleryModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-panel modal-panel-gallery" role="dialog" aria-modal="true" aria-labelledby="galleryTitle">
+      <div class="modal-head">
+        <div>
+          <p class="card-kicker">FUNCTION ATLAS</p>
+          <h2 id="galleryTitle">二次函数</h2>
+          <p id="gallerySubtitle">常见函数的图像与性质。</p>
+        </div>
+        <button class="icon-btn" type="button" data-close-modal aria-label="关闭">
+          <svg class="icon"><use href="#i-close"/></svg>
+        </button>
+      </div>
+      <div class="gallery-detail">
+        <div class="gallery-detail-plot">
+          <canvas id="galleryCanvas" aria-label="函数图鉴大图"></canvas>
+          <span class="gallery-detail-caption">拖动查看 · 滚轮缩放</span>
+        </div>
+        <div class="gallery-detail-info">
+          <div class="gallery-detail-formula" id="galleryFormula"></div>
+          <p class="gallery-description" id="galleryDescription"></p>
+          <dl class="gallery-properties">
+            <div><dt>定义域</dt><dd id="galleryDomain">—</dd></div>
+            <div><dt>值域</dt><dd id="galleryRange">—</dd></div>
+            <div><dt>单调与对称</dt><dd id="galleryShape">—</dd></div>
+            <div><dt>关键特征</dt><dd id="galleryFeatures">—</dd></div>
+          </dl>
+          <button class="primary-btn gallery-use-btn" id="galleryUseBtn" type="button">
+            <span class="btn-glow"></span>
+            <span>绘制到函数画布</span>
+            <svg class="icon"><use href="#i-arrow"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite" aria-atomic="false"></div>
+
+  <script defer src="assets/vendor/math.js"></script>
+  <script defer src="assets/vendor/nerdamer.min.js"></script>
+  <script defer src="assets/vendor/katex.min.js"></script>
+  <script defer src="assets/js/math-core.js"></script>
+  <script defer src="assets/js/plotter.js"></script>
+  <script defer src="assets/js/app.js"></script>
+</body>
+</html>
